@@ -1,3 +1,11 @@
+; ~/.elisp を load-path の先頭に加える
+(setq load-path
+      (append
+       (list
+       (expand-file-name "~/.site-lisp/")
+       )
+       load-path))
+
 (define-key global-map "\C-h" 'delete-backward-char) ; 削除
 (define-key global-map "\M-?" 'help-for-help)        ; ヘルプ
 (define-key global-map "\C-z" 'undo)                 ; undo
@@ -69,4 +77,6 @@
   (interactive)
   (shell-command (concat "php -l " (buffer-file-name))))
 
-
+; 行番号表示
+(require 'wb-line-number)
+(wb-line-number-toggle)
