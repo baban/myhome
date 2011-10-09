@@ -1,3 +1,10 @@
+(setq load-path
+  (append
+    (list
+      (expand-file-name "~/.site-lisp/")
+      )
+      load-path))
+
 (set-language-environment 'Japanese)
 ;(set-default-coding-systems 'euc-jp-unix)
 (set-terminal-coding-system 'utf-8) ;; *1
@@ -7,9 +14,6 @@
 (set-file-name-coding-system 'utf-8)
 ;(require 'utf-8m)
 ;(set-file-name-coding-system 'utf-8m) ;; *2
-
-;; 行数表示
-(line-number-mode t)
 
 (define-key global-map "\C-h" 'delete-backward-char) ; 削除
 (define-key global-map "\M-?" 'help-for-help)        ; ヘルプ
@@ -81,6 +85,21 @@
 ;;; 最近使ったファイルを保存(M-x recentf-open-filesで開く)
 (recentf-mode)
 
+;; 行番号を表示
+;; linumを有効化
+(require 'linum)
+
+;; デフォルトでONにする
+(global-linum-mode t)
+
+;; 5桁とスペースの領域を割り当てる
+(setq linum-format "%5d ")
+
+;; F5キーにON/OFFの切り替えを割り当てる
+(global-set-key [f5] 'linum-mode)
+
+(setq line-number-mode t)  ;;カーソルのある行番号を表示
+
 ;; PHPモード
 (autoload 'php-mode "php-mode" "PHP mode" t)
 (defcustom php-file-patterns (list "\\.php\\'" "\\.inc\\'" "\\.ctp\\'")
@@ -88,10 +107,12 @@
   :type '(repeat (regexp :tag "Pattern"))
   :group 'php)
   (let ((php-file-patterns-temp php-file-patterns))
+    (global-linum-mode 1)
     (while php-file-patterns-temp
       (add-to-list 'auto-mode-alist
                  (cons (car php-file-patterns-temp) 'php-mode))
     (setq php-file-patterns-temp (cdr php-file-patterns-temp))))
+
 ;;構文チェック
 (add-hook 'php-mode-hook
          '(lambda ()
