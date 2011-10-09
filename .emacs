@@ -1,10 +1,15 @@
-; ~/.elisp を load-path の先頭に加える
-(setq load-path
-      (append
-       (list
-       (expand-file-name "~/.site-lisp/")
-       )
-       load-path))
+(set-language-environment 'Japanese)
+;(set-default-coding-systems 'euc-jp-unix)
+(set-terminal-coding-system 'utf-8) ;; *1
+;(set-keyboard-coding-system
+; (if (eq window-system 'mac) 'sjis-mac 'utf-8))
+(set-clipboard-coding-system 'utf-8)
+(set-file-name-coding-system 'utf-8)
+;(require 'utf-8m)
+;(set-file-name-coding-system 'utf-8m) ;; *2
+
+;; 行数表示
+(line-number-mode t)
 
 (define-key global-map "\C-h" 'delete-backward-char) ; 削除
 (define-key global-map "\M-?" 'help-for-help)        ; ヘルプ
@@ -16,16 +21,35 @@
 (define-key global-map "\C-o" 'toggle-input-method)  ; 日本語入力切替
 (define-key global-map "\C-\\" nil) ; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-c " 'other-frame)         ; フレーム移動
+(global-set-key "\C-m" 'newline-and-indent)          ; 改行キーでオートインデントさせる
+(global-set-key "\C-j" 'newline)                     ; 改行キーでオートインデントさせる
 (show-paren-mode 1)
+
+;;; 初期フレームの設定
+(setq initial-frame-alist
+  (append
+    '((top . 22)    ; フレームの Y 位置(ピクセル数)
+	   (left   . 100)   ; フレームの X 位置(ピクセル数)
+	   (width  . 120)    ; フレーム幅(文字数)
+	   (height . 30))   ; フレーム高(文字数)
+     initial-frame-alist))
+
+;;; 新規フレームのデフォルト設定
+(setq default-frame-alist
+  (append
+    '((width  . 120)	; フレーム幅(文字数)
+      (height . 30))	; フレーム高(文字数)	
+       default-frame-alist))
+
 ;;; 終了時にオートセーブファイルを消す
 (setq delete-auto-save-files t)
 
 ;;; 補完時に大文字小文字を区別しない
-(setq completion-ignore-case t)
+;(setq completion-ignore-case t)
 
 ;;; 強力な補完機能を使う
 ;;; p-bでprint-bufferとか
-;;(load "complete")
+(load "complete")
 (partial-completion-mode 1)
 
 ;;; 補完可能なものを随時表示
@@ -42,14 +66,14 @@
 (setq kill-whole-line t)
 
 ;;; バッファの最後でnewlineで新規行を追加するのを禁止する
-(setq next-line-add-newlines nil)
+;(setq next-line-add-newlines nil)
 
 ;;; 最終行に必ず一行挿入する
 (setq require-final-newline t)
 
 ;;; 一行が 80 字以上になった時には自動改行する
-(setq fill-column 80)
-(setq-default auto-fill-mode t)
+;(setq fill-column 80)
+;(setq-default auto-fill-mode t)
 
 ;;; 現在の関数名をモードラインに表示
 (which-function-mode 1)
@@ -77,6 +101,3 @@
   (interactive)
   (shell-command (concat "php -l " (buffer-file-name))))
 
-; 行番号表示
-(require 'wb-line-number)
-(wb-line-number-toggle)
