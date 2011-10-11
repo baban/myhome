@@ -37,7 +37,6 @@ setopt COMPLETE_IN_WORD
 find-grep () { find . -type f -print | xargs grep -n --binary-files=without-match $@ }
 
 # エイリアスの設定
-alias ls='ls --color=auto'
 alias ll='ls -ltr'
 alias gd='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
 

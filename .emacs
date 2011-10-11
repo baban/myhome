@@ -6,12 +6,12 @@
 
 (set-language-environment 'Japanese)
 (set-terminal-coding-system 'utf-8) ;; *1
-(set-file-name-coding-system 'utf-8)
 
 ; carbon emacs 限定設定を行う
 (if (featurep 'carbon-emacs-package)
   (block
     (set-clipboard-coding-system 'utf-8)
+    (set-file-name-coding-system 'utf-8)
     ; nxhtml
     (load-library "autostart") 
     ; 透明度の設定、非アクティブなら80%
