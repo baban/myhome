@@ -1,23 +1,35 @@
 (setq load-path
   (append
     (list
-      (expand-file-name "~/.site-lisp/")
-      )
+      (expand-file-name "~/.site-lisp/"))
       load-path))
 
 (set-language-environment 'Japanese)
-;(set-default-coding-systems 'euc-jp-unix)
 (set-terminal-coding-system 'utf-8) ;; *1
-;(set-keyboard-coding-system
-; (if (eq window-system 'mac) 'sjis-mac 'utf-8))
-(set-clipboard-coding-system 'utf-8)
 (set-file-name-coding-system 'utf-8)
-;(require 'utf-8m)
-;(set-file-name-coding-system 'utf-8m) ;; *2
+
+; carbon emacs 限定設定を行う
+(if (featurep 'carbon-emacs-package)
+  (block
+    (set-clipboard-coding-system 'utf-8)
+    ; nxhtml
+    (load-library "autostart") 
+    ; 透明度の設定、非アクティブなら80%
+    (set-frame-parameter nil 'alpha '(100 80))
+    ; ElScreenの有効化
+    (require 'elscreen)
+    ; PrefixキーをC-zに割り当て
+    (if window-system
+      (define-key elscreen-map "\C-z" 'iconify-or-deiconify-frame)
+      (define-key elscreen-map "\C-z" 'suspend-emacs))
+    )
+  ; 非mac設定
+  (block
+    ; undo
+    (define-key global-map "\C-z" 'undo)))
 
 (define-key global-map "\C-h" 'delete-backward-char) ; 削除
 (define-key global-map "\M-?" 'help-for-help)        ; ヘルプ
-(define-key global-map "\C-z" 'undo)                 ; undo
 (define-key global-map "\C-ci" 'indent-region)       ; インデント
 (define-key global-map "\C-c\C-i" 'dabbrev-expand)   ; 補完
 (define-key global-map "\C-c;" 'comment-region)      ; コメントアウト
@@ -25,17 +37,19 @@
 (define-key global-map "\C-o" 'toggle-input-method)  ; 日本語入力切替
 (define-key global-map "\C-\\" nil) ; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-c " 'other-frame)         ; フレーム移動
-(global-set-key "\C-m" 'newline-and-indent)          ; 改行キーでオートインデントさせる
-(global-set-key "\C-j" 'newline)                     ; 改行キーでオートインデントさせる
 (show-paren-mode 1)
+
+(setq mac-option-modifier 'meta)
+(setq pc-select-selection-keys-only t)
+(pc-selection-mode 1)
 
 ;;; 初期フレームの設定
 (setq initial-frame-alist
   (append
     '((top . 22)    ; フレームの Y 位置(ピクセル数)
-	   (left   . 100)   ; フレームの X 位置(ピクセル数)
-	   (width  . 120)    ; フレーム幅(文字数)
-	   (height . 30))   ; フレーム高(文字数)
+       (left   . 100)   ; フレームの X 位置(ピクセル数)
+       (width  . 120)    ; フレーム幅(文字数)
+       (height . 30))   ; フレーム高(文字数)
      initial-frame-alist))
 
 ;;; 新規フレームのデフォルト設定
@@ -88,13 +102,10 @@
 ;; 行番号を表示
 ;; linumを有効化
 (require 'linum)
-
 ;; デフォルトでONにする
 (global-linum-mode t)
-
 ;; 5桁とスペースの領域を割り当てる
 (setq linum-format "%5d ")
-
 ;; F5キーにON/OFFの切り替えを割り当てる
 (global-set-key [f5] 'linum-mode)
 
