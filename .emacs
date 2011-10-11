@@ -26,7 +26,10 @@
   ; 非mac設定
   (block
     ; undo
-    (define-key global-map "\C-z" 'undo)))
+    (define-key global-map "\C-z" 'undo)
+    ; 行番号表示
+    (require 'wb-line-number)
+    (wb-line-number-toggle)))
 
 (define-key global-map "\C-h" 'delete-backward-char) ; 削除
 (define-key global-map "\M-?" 'help-for-help)        ; ヘルプ
@@ -108,8 +111,6 @@
 (setq linum-format "%5d ")
 ;; F5キーにON/OFFの切り替えを割り当てる
 (global-set-key [f5] 'linum-mode)
-
-(setq line-number-mode t)  ;;カーソルのある行番号を表示
 
 ;; PHPモード
 (autoload 'php-mode "php-mode" "PHP mode" t)
