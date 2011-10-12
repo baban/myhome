@@ -7,36 +7,26 @@
 ; linumを有効化
 (require 'linum)
 
-; carbon emacs 限定設定を行う
-(if (featurep 'carbon-emacs-package)
+(if (eq window-system 'mac)
   (block
+    (setq mac-option-modifier 'meta)
+    (setq pc-select-selection-keys-only t)
+    (pc-selection-mode 1)
     (set-language-environment 'Japanese)
     (set-terminal-coding-system 'utf-8)
     (set-clipboard-coding-system 'utf-8)
     (set-file-name-coding-system 'utf-8)
-    ; nxhtml
-    ;(load-library "autostart") 
-    ; 透明度の設定、非アクティブなら80%
     (set-frame-parameter nil 'alpha '(100 80))
-    ; ElScreenの有効化
     (require 'elscreen)
-    ; PrefixキーをC-zに割り当て
     (if window-system
       (define-key elscreen-map "\C-z" 'iconify-or-deiconify-frame)
       (define-key elscreen-map "\C-z" 'suspend-emacs))
-    )
-    ; 行番号を表示
-    ; デフォルトでONにする
     (global-linum-mode t)
-    ; 5桁とスペースの領域を割り当てる
     (setq linum-format "%5d ")
-    ; F5キーにON/OFFの切り替えを割り当てる
-    (global-set-key [f5] 'linum-mode)
-  ; 非mac設定
+    (global-set-key [f5] 'linum-mode))
   (block
     ; undo
     (define-key global-map "\C-z" 'undo)
-    ; 行番号表示
     (require 'wb-line-number)
     (wb-line-number-toggle)))
 
@@ -49,11 +39,9 @@
 (define-key global-map "\C-o" 'toggle-input-method)  ; 日本語入力切替
 (define-key global-map "\C-\\" nil) ; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-c " 'other-frame)         ; フレーム移動
+; 拡張子tplを関連付け
+(add-to-list 'auto-mode-alist '("//.tpl$" . html-mode))
 (show-paren-mode 1)
-
-(setq mac-option-modifier 'meta)
-(setq pc-select-selection-keys-only t)
-(pc-selection-mode 1)
 
 ; 初期フレームの設定
 (setq initial-frame-alist
@@ -118,7 +106,7 @@
   :type '(repeat (regexp :tag "Pattern"))
   :group 'php)
   (let ((php-file-patterns-temp php-file-patterns))
-    (global-linum-mode 1)
+    ;(global-linum-mode 1)
     (while php-file-patterns-temp
       (add-to-list 'auto-mode-alist
                  (cons (car php-file-patterns-temp) 'php-mode))
@@ -126,8 +114,8 @@
 
 ;構文チェック
 (add-hook 'php-mode-hook
-         '(lambda ()
-           (local-set-key "\C-ctj" 'php-lint)))
+  '(lambda ()
+     (local-set-key "\C-ctj" 'php-lint)))
 
 (defun php-lint ()
   "Performs a PHP lint-check on the current file."
