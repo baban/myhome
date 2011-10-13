@@ -4,52 +4,54 @@
       (expand-file-name "~/.site-lisp/"))
       load-path))
 
-; linumを有効化
-(require 'linum)
+; メタキーをaltに変更
+(setq mac-option-modifier 'meta)
+
+; 行番号設定
+(require 'linum)  ; linumで行番号は作成
+(global-linum-mode t)
+(setq linum-format "%5d ")
+(global-set-key [f5] 'linum-mode)
 
 (if (eq window-system 'mac)
-  (block
-    (setq mac-option-modifier 'meta)
+  ; carbon emacs 設定
+  (progn
     (setq pc-select-selection-keys-only t)
     (pc-selection-mode 1)
     (set-language-environment 'Japanese)
     (set-terminal-coding-system 'utf-8)
     (set-clipboard-coding-system 'utf-8)
     (set-file-name-coding-system 'utf-8)
-    (set-frame-parameter nil 'alpha '(100 80))
+    (set-frame-parameter nil 'alpha '(100 80))  ; 画面の透明度設定
+    ; タブ化
     (require 'elscreen)
     (if window-system
       (define-key elscreen-map "\C-z" 'iconify-or-deiconify-frame)
       (define-key elscreen-map "\C-z" 'suspend-emacs))
-    (global-linum-mode t)
-    (setq linum-format "%5d ")
-    (global-set-key [f5] 'linum-mode))
-  (block
-    ; undo
-    (define-key global-map "\C-z" 'undo)
-    (require 'wb-line-number)
-    (wb-line-number-toggle)))
+    ))
 
 (define-key global-map "\C-h" 'delete-backward-char) ; 削除
 (define-key global-map "\M-?" 'help-for-help)        ; ヘルプ
 (define-key global-map "\C-ci" 'indent-region)       ; インデント
 (define-key global-map "\C-c\C-i" 'dabbrev-expand)   ; 補完
+(define-key global-map "\C-c\C-c" 'set-mark-command)   ; 現在のカーソル位置をマーク
 (define-key global-map "\C-c;" 'comment-region)      ; コメントアウト
 (define-key global-map "\C-c:" 'uncomment-region)    ; コメント解除
 (define-key global-map "\C-o" 'toggle-input-method)  ; 日本語入力切替
 (define-key global-map "\C-\\" nil) ; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-c " 'other-frame)         ; フレーム移動
-; 拡張子tplを関連付け
-(add-to-list 'auto-mode-alist '("//.tpl$" . html-mode))
 (show-paren-mode 1)
+
+; 拡張子tplをhtmlに関連付け
+(add-to-list 'auto-mode-alist '("//.tpl$" . html-mode))
 
 ; 初期フレームの設定
 (setq initial-frame-alist
   (append
-    '((top . 22)    ; フレームの Y 位置(ピクセル数)
-       (left   . 100)   ; フレームの X 位置(ピクセル数)
-       (width  . 120)    ; フレーム幅(文字数)
-       (height . 30))   ; フレーム高(文字数)
+    '((top    . 22)    ; フレームの Y 位置(ピクセル数)
+      (left   . 100)   ; フレームの X 位置(ピクセル数)
+      (width  . 120)   ; フレーム幅(文字数)
+      (height . 30))   ; フレーム高(文字数)
      initial-frame-alist))
 
 ; 新規フレームのデフォルト設定
@@ -121,4 +123,3 @@
   "Performs a PHP lint-check on the current file."
   (interactive)
   (shell-command (concat "php -l " (buffer-file-name))))
-
