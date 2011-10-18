@@ -1,0 +1,4 @@
+#contributor : Nishio Hirokazu
+#name : var buf:Array = new Array();
+# --
+var ${1:buf}:Array = ${2:new Array()};

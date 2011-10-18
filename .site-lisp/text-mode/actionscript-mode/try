@@ -1,0 +1,8 @@
+#contributor : Nishio Hirokazu
+#name : try...catch
+# --
+try{
+  $0
+}catch(e:Error){
+  log(e);
+}

@@ -1,0 +1,5 @@
+#contributor : Nishio Hirokazu
+#name : var x:Class = new Class();
+# --
+var ${1:x}:${2:Class} = new $2(${3:args});
+$0

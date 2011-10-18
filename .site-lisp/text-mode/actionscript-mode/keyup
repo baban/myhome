@@ -1,0 +1,12 @@
+#contributor : Nishio Hirokazu
+#name : template of function keyUpHandler
+# --
+public function keyUpHandler(e:KeyboardEvent):void{
+  switch(e.keyCode){
+    case 32:
+      break;
+
+    default:
+      break;
+  }
+}

@@ -1,0 +1,6 @@
+#contributor : Nishio Hirokazu
+#name : public function
+# --
+public function ${1:funcname}(${2:args}):${3:void}{
+  $0
+}

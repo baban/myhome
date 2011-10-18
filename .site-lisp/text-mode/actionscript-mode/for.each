@@ -1,0 +1,7 @@
+#contributor : Nishio Hirokazu
+#name : for(elements) :
+# --
+for(var ${1:i}:int = 0; $1 < ${2:elements}.length; $1++){
+  var x:Object = $2[$1];
+  $0
+}

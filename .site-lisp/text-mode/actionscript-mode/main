@@ -1,0 +1,16 @@
+#contributor : Nishio Hirokazu
+#name : main tamplate
+# --
+`(progn 
+  (defvar classname 
+   (capitalize (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))))
+"")
+`package {
+  import flash.display.*;
+  [SWF(width="400", height="300", backgroundColor="#eeffee")] 
+    public class `classname` extends Sprite {
+    public function `classname`() {
+      
+    }
+  }
+}

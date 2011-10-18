@@ -1,0 +1,8 @@
+#contributor : Nishio Hirokazu
+#name : some addEventListener
+# --
+addEventListener(MouseEvent.MOUSE_UP, mouseHandler);
+addEventListener(MouseEvent.MOUSE_DOWN, mouseHandler);
+addEventListener(MouseEvent.MOUSE_MOVE, mouseHandler);
+addEventListener(KeyboardEvent.KEY_UP, keyHandler);
+addEventListener(Event.ENTER_FRAME, run);

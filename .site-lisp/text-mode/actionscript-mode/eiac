@@ -1,0 +1,4 @@
+#contributor : Nishio Hirokazu
+#name : ExternalInterface.addCallback
+# --
+ExternalInterface.addCallback("${1:func}", $1);

@@ -1,0 +1,5 @@
+#contributor : Nishio Hirokazu
+#name : var x:String = "";
+# --
+var ${1:x}:String = "${2: }";
+$0

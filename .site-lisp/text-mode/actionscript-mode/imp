@@ -1,0 +1,5 @@
+#contributor : Nishio Hirokazu
+#name : import
+# --
+import ${1:flash}.${2:display}.${3:*};
+$0
