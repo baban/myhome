@@ -8,15 +8,28 @@ autoload -U colors; colors
 #PROMPT=$'\n%{\e[1;32m%}%n@%m %{\e[1;33m%}%~\n%{\e[1;m%}%(!.#.$) '
 #SPROMPT="correct: %R -> %r ? "
 
+local GREEN=$'%{\e[1;32m%}'
+local YELLOW=$'%{\e[1;33m%}'
+local BLUE=$'%{\e[1;34m%}'
+local DEFAULT=$'%{\e[1;m%}'
+
 PROMPT=$'%n@%m %~ %% '
 SPROMPT="correct: %R -> %r ? "
-
 
 autoload -U compinit
 compinit
 
 #allow tab completion in the middle of a word
 setopt COMPLETE_IN_WORD
+
+# 出力の文字列末尾に改行コードが無い場合でも表示
+unsetopt promptcr
+
+# 色を使う
+setopt prompt_subst
+
+# 補完候補一覧でファイルの種別をマーク表示
+setopt list_types
 
 ## keep background processes at full speed
 #setopt NOBGNICE
@@ -60,13 +73,20 @@ setopt extended_history
 # 補完するかの質問は画面を超える時にのみに行う｡
 LISTMAX=0
 
-autoload -Uz compinit; compinit
+# =command を command のパス名に展開する
+setopt equals
+
+# --prefix=/usr などの = 以降も補完
+setopt magic_equal_subst
 
 # sudo でも補完の対象
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
 
 # cdのタイミングで自動的にpushd
 setopt auto_pushd 
+
+# 同じディレクトリを pushd しない
+setopt pushd_ignore_dups
 
 # 複数の zsh を同時に使う時など history ファイルに上書きせず追加
 setopt append_history
@@ -104,7 +124,10 @@ setopt hist_reduce_blanks
 setopt hist_verify
 
 # auto_list の補完候補一覧で、ls -F のようにファイルの種別をマーク表示しない
-setopt no_list_types
+# setopt no_list_types
+
+# 補完候補一覧でファイルの種別をマーク表示
+setopt list_types
 
 # コマンドラインの引数で --prefix=/usr などの = 以降でも補完できる
 setopt magic_equal_subst
@@ -117,6 +140,9 @@ setopt print_eight_bit
 
 # シェルのプロセスごとに履歴を共有
 setopt share_history
+
+# スペルチェック
+setopt correct
 
 # Ctrl+wで､直前の/までを削除する｡
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
