@@ -132,6 +132,14 @@ setopt no_flow_control
 # git のエイリアス
 # http://tobysoft.net/wiki/index.php?git%2F%A5%B3%A5%DE%A5%F3%A5%C9%A4%CE%BE%CA%CE%AC%28alias%29%C0%DF%C4%EA%A4%F2%A4%B9%A4%EB%CA%FD%CB%A1
 
+
+# 環境ごとの独自設定を記述
+case `uname` in 
+  "Linux")   [ -f ~/.zshrc.linux  ] && source ~/.zshrc.linux;;
+  "Darwin")  [ -f ~/.zshrc.mac    ] && source ~/.zshrc.mac;;
+esac
+
+
 alias gco="git checkout"
 alias gst="git status"
 alias gci="git commit -a"
@@ -158,4 +166,3 @@ alias hres="sudo /etc/init.d/httpd restart"
 alias his="history 0"
 
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
-
