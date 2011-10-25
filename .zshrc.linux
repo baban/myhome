@@ -1,3 +1,3 @@
 
-alias ls="ls --colors"
+alias ls="ls --color"
 
