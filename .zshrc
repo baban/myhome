@@ -54,9 +54,6 @@ setopt list_types
 # autoload -U colors
 #colors
 
-# 関数
-find-grep () { find . -type f -print | xargs grep -n --binary-files=without-match $@ }
-
 # エイリアスの設定
 alias ll='ls -ltr'
 alias gd='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
@@ -65,7 +62,6 @@ alias gd='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-
 
 # 履歴ファイルに時刻を記録
 setopt extended_history
@@ -162,10 +158,11 @@ setopt auto_cd
 # C-s, C-qを無効にする。
 setopt no_flow_control
 
-
 # git のエイリアス
 # http://tobysoft.net/wiki/index.php?git%2F%A5%B3%A5%DE%A5%F3%A5%C9%A4%CE%BE%CA%CE%AC%28alias%29%C0%DF%C4%EA%A4%F2%A4%B9%A4%EB%CA%FD%CB%A1
 
+# bash zsh 共通の拡張設定
+[ -f ~/.xshrc ] && source ~/.xshrc
 
 # 環境ごとの独自設定を記述
 case `uname` in 
@@ -173,30 +170,5 @@ case `uname` in
   "Darwin")  [ -f ~/.zshrc.mac    ] && source ~/.zshrc.mac;;
 esac
 
-
-alias gco="git checkout"
-alias gst="git status"
-alias gci="git commit -a"
-alias gdi="git diff"
-alias gbr="git branch"
-
-function git-init(){
-	git config --global alias.co checkout
-	git config --global alias.c checkout
-	git config --global alias.st 'status'
-	git config --global alias.s 'status'
-	git config --global alias.ci 'commit -a '
-	git config --global alias.di 'diff'
-	git config --global alias.br 'branch'
-	git config --global alias.b 'branch'
-	git config --global alias.log 'log --name-status'
-	git config --global alias.l 'log --name-status'
-}
-
-
-
-function date-cp(){ cp $1 "$1"_`date +"%Y%m%d"` }
-alias hres="sudo /etc/init.d/httpd restart"
-alias his="history 0"
-
+# ホストサーバーごとの依存の設定を追記
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine

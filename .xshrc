@@ -1,0 +1,28 @@
+
+# 関数
+find-grep () { find . -type f -print | xargs grep -n --binary-files=without-match $@ }
+
+alias gco="git checkout"
+alias gst="git status"
+alias gci="git commit -a"
+alias gdi="git diff"
+alias gbr="git branch"
+
+function git-init(){
+	git config --global alias.co checkout
+	git config --global alias.c checkout
+	git config --global alias.st 'status'
+	git config --global alias.s 'status'
+	git config --global alias.ci 'commit -a '
+	git config --global alias.di 'diff'
+	git config --global alias.br 'branch'
+	git config --global alias.b 'branch'
+	git config --global alias.log 'log --name-status'
+	git config --global alias.l 'log --name-status'
+}
+
+function date-cp(){ cp $1 "$1"_`date +"%Y%m%d"` }
+alias hres="sudo /etc/init.d/httpd restart"
+alias his="history 0"
+
+
