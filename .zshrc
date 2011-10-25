@@ -4,6 +4,14 @@
 # functions, options, key bindings, etc.
 #
 
+autoload -U colors; colors
+#PROMPT=$'\n%{\e[1;32m%}%n@%m %{\e[1;33m%}%~\n%{\e[1;m%}%(!.#.$) '
+#SPROMPT="correct: %R -> %r ? "
+
+PROMPT=$'%n@%m %~ %% '
+SPROMPT="correct: %R -> %r ? "
+
+
 autoload -U compinit
 compinit
 

@@ -1,5 +1,8 @@
 # .bashrc
 
+
+export PS1="\[\033[0m\][\u@\h:\W]$ "
+
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
