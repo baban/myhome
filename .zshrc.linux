@@ -1,3 +1,5 @@
 
 alias ls="ls --color"
 
+# どうせcent標準だと同じようなものだし大丈夫だよね（汗
+alias lv="less"

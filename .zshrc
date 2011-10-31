@@ -20,95 +20,36 @@ zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/s
 # 補完するかの質問は画面を超える時にのみに行う｡
 LISTMAX=0
 
-# ディレクトリ名だけで､ディレクトリの移動をする｡
-setopt auto_cd
-
-# 補完キー（Tab, Ctrl+I) を連打するだけで順に補完候補を自動で補完
-setopt auto_menu
-
-# cdのタイミングで自動的にpushd
-setopt auto_pushd 
-
-# 複数の zsh を同時に使う時など history ファイルに上書きせず追加
-setopt append_history
-
-# 補完候補が複数ある時に、一覧表示
-setopt auto_list
-
-# カッコの対応などを自動的に補完
-setopt auto_param_keys
-
-# ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
-setopt auto_param_slash
-
-# ビープ音を鳴らさないようにする
-setopt no_beep
-
-# {a-za-z} をブレース展開
-setopt brace_ccl
-
-# スペルチェック
-setopt correct
-
-#allow tab completion in the middle of a word
-setopt COMPLETE_IN_WORD
-
-# =command を command のパス名に展開する
-setopt equals
-
-# 履歴ファイルに時刻を記録
-setopt extended_history
-
-# C-s, C-qを無効にする。
-setopt no_flow_control
-
-# 直前と同じコマンドラインはヒストリに追加しない
-setopt hist_ignore_dups
-
-# 余分なスペースを削除してヒストリに記録する
-setopt hist_reduce_blanks
-
-# 行頭がスペースで始まるコマンドラインはヒストリに記録しない
-# setopt hist_ignore_spece
-
-# 重複したヒストリは追加しない
-# setopt hist_ignore_all_dups
-
-# ヒストリを呼び出してから実行する間に一旦編集できる状態になる
-setopt hist_verify
-
-# 走行中のジョブにシグナルを送らない
-setopt no_hup
-
-# 補完の時にベルを鳴らさない
-setopt no_list_beep
-
-# 補完候補一覧でファイルの種別をマーク表示
-setopt list_types
-
-# 保管結果をできるだけ詰める
-setopt list_packed
-
-# コマンドラインの引数で --prefix=/usr などの = 以降でも補完できる
-setopt magic_equal_subst
-
-# ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
-setopt mark_dirs
-
-# 8 ビット目を通すようになり、日本語のファイル名を表示可能
-setopt print_eight_bit
-
-# 出力の文字列末尾に改行コードが無い場合でも表示
-unsetopt promptcr
-
-# 色を使う
-setopt prompt_subst
-
-# 同じディレクトリを pushd しない
-setopt pushd_ignore_dups
-
-# シェルのプロセスごとに履歴を共有
-setopt share_history
+setopt auto_cd # ディレクトリ名だけで､ディレクトリの移動をする｡
+setopt auto_menu # 補完キー（Tab, Ctrl+I) を連打するだけで順に補完候補を自動で補完
+setopt auto_pushd  # cdのタイミングで自動的にpushd
+setopt append_history # 複数の zsh を同時に使う時など history ファイルに上書きせず追加
+setopt auto_list # 補完候補が複数ある時に、一覧表示
+setopt auto_param_keys # カッコの対応などを自動的に補完
+setopt auto_param_slash # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
+setopt no_beep # ビープ音を鳴らさないようにする
+setopt brace_ccl # {a-za-z} をブレース展開
+setopt correct # スペルチェック
+setopt complete_in_word  #allow tab completion in the middle of a word
+setopt equals # =command を command のパス名に展開する
+setopt extended_history # 履歴ファイルに時刻を記録
+setopt no_flow_control # C-s, C-qを無効にする。
+setopt hist_ignore_dups # 直前と同じコマンドラインはヒストリに追加しない
+setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに記録する
+# setopt hist_ignore_spece # 行頭がスペースで始まるコマンドラインはヒストリに記録しない
+# setopt hist_ignore_all_dups # 重複したヒストリは追加しない
+setopt hist_verify # ヒストリを呼び出してから実行する間に一旦編集できる状態になる
+setopt no_hup # 走行中のジョブにシグナルを送らない
+setopt no_list_beep # 補完の時にベルを鳴らさない
+setopt list_types # 補完候補一覧でファイルの種別をマーク表示
+setopt list_packed # 保管結果をできるだけ詰める
+setopt magic_equal_subst # コマンドラインの引数で --prefix=/usr などの = 以降でも補完できる
+setopt mark_dirs # ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
+setopt print_eight_bit # 8 ビット目を通すようになり、日本語のファイル名を表示可能
+setopt no_promptcr # 出力の文字列末尾に改行コードが無い場合でも表示
+setopt prompt_subst # 色を使う
+setopt pushd_ignore_dups # 同じディレクトリを pushd しない
+setopt share_history # シェルのプロセスごとに履歴を共有
 
 
 # Ctrl+wで､直前の/までを削除する｡
