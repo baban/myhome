@@ -1,3 +1,6 @@
+# 履歴検索
+hist-grep () { history -100000 | grep $@ }
+history-grep () { history -100000 | grep $@ }
 
 # 関数
 find-grep () { find . -type f -print | xargs grep -n --binary-files=without-match $@ }
