@@ -34,9 +34,9 @@
     (setq mac-option-modifier 'meta)
     ;; carbon emacs でメタキーを altに変える
  
-   (setq pc-select-selection-keys-only t)
+    (setq pc-select-selection-keys-only t)
     (pc-selection-mode 1)
-    (set-language-environment 'Japanese)
+    ;(set-language-environment 'Japanese)
     ;; アンチエイリアス
     (setq mac-allow-anti-aliasing nil)
     ;; 幅3ポイントの縦棒カーソル
