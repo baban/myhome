@@ -26,14 +26,12 @@
       (height . 30))	; フレーム高(文字数)	
        default-frame-alist))
 
-
 (when (featurep 'carbon-emacs-package)
   (progn
     ;; メタキーをoptionに変更
     (mac-key-mode 1)
     (setq mac-option-modifier 'meta)
     ;; carbon emacs でメタキーを altに変える
- 
     (setq pc-select-selection-keys-only t)
     (pc-selection-mode 1)
     ;(set-language-environment 'Japanese)
@@ -47,7 +45,6 @@
     (add-to-list 'default-frame-alist '(mouse-color . "SlateBlue2"))
     ;; 選択範囲の色を指定
     (set-face-background 'region "lavender")
-    ;(set-face-foreground 'region "black")
     ;; 透明度の設定
     (set-frame-parameter nil 'alpha '(100 80))
     ;; タブ化
@@ -71,6 +68,14 @@
 ;; git 対応
 (require 'magit)
 
+;; zencoding対応
+(require 'zencoding-mode)
+(add-hook 'xml-mode-hook 'zencoding-mode)
+(add-hook 'sgml-mode-hook 'zencoding-mode)
+(add-hook 'html-mode-hook 'zencoding-mode)
+(define-key global-map "\M-0" 'zencoding-expand-line)
+;(define-key zencoding-mode-keymap "\M-0" 'zencoding-expand-line)
+
 (define-key global-map "\C-h" 'delete-backward-char) ; 削除
 (define-key global-map "\M-?" 'help-for-help)        ; ヘルプ
 (define-key global-map "\C-ci" 'indent-region)       ; インデント
@@ -80,7 +85,8 @@
 (define-key global-map "\C-o" 'toggle-input-method)  ; 日本語入力切替
 (define-key global-map "\C-\\" nil)                  ; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-c " 'other-frame)         ; フレーム移動
-(define-key global-map "\M-g " 'goto-line)           ; 指定行へジャンプ
+;(define-key global-map "\M-g " 'goto-line)           ; 指定行へジャンプ
+(define-key global-map "\M-g " 'zencoding-expand-line)           ; 指定行へジャンプ
 
 ;; 拡張子tplを関連付け
 (add-to-list 'auto-mode-alist '("//.tpl$" . html-mode))
