@@ -59,6 +59,12 @@
 ;; macシステム
 (when (eq system-type 'darwin) ())
 
+; mac フォント設定
+(if (eq window-system 'mac) 
+  (progn 
+    (require 'carbon-font)
+    (fixed-width-set-fontset "Osaka" 12)))
+
 ;; 非mac で 非GUI な設定
 (when (not (featurep 'carbon-emacs-package))
   (progn
@@ -85,8 +91,7 @@
 (define-key global-map "\C-o" 'toggle-input-method)  ; 日本語入力切替
 (define-key global-map "\C-\\" nil)                  ; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-c " 'other-frame)         ; フレーム移動
-;(define-key global-map "\M-g " 'goto-line)           ; 指定行へジャンプ
-(define-key global-map "\M-g " 'zencoding-expand-line)           ; 指定行へジャンプ
+(define-key global-map "\M-g " 'goto-line)           ; 指定行へジャンプ
 
 ;; 拡張子tplを関連付け
 (add-to-list 'auto-mode-alist '("//.tpl$" . html-mode))
