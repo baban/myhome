@@ -1,3 +1,4 @@
+; -*- tab-width: 2 -*-
 ;;; .emacs -- my emacs cobfiguration
 ;; Author: babanba-n
 ;; Created: 10 Dec 2011
@@ -23,7 +24,7 @@
 (setq default-frame-alist
   (append
     '((width  . 120)	; フレーム幅(文字数)
-      (height . 30))	; フレーム高(文字数)	
+      (height . 30))	; フレーム高(文字数)
        default-frame-alist))
 
 (when (featurep 'carbon-emacs-package)
@@ -34,7 +35,6 @@
     ;; carbon emacs でメタキーを altに変える
     (setq pc-select-selection-keys-only t)
     (pc-selection-mode 1)
-    ;(set-language-environment 'Japanese)
     ;; アンチエイリアス
     (setq mac-allow-anti-aliasing nil)
     ;; 幅3ポイントの縦棒カーソル
@@ -63,13 +63,31 @@
 (if (eq window-system 'mac) 
   (progn 
     (require 'carbon-font)
-    (fixed-width-set-fontset "Osaka" 12)))
+    (fixed-width-set-fontset "Osaka" 10)))
 
 ;; 非mac で 非GUI な設定
 (when (not (featurep 'carbon-emacs-package))
   (progn
     (require 'wb-line-number)
     (wb-line-number-toggle)))
+
+;; タブや空白の表示設定
+(defface my-face-b-1 '((t (:foreground "Red" :underline t))) nil)
+(defface my-face-b-2 '((t (:foreground "gainsboro" :underline t))) nil)
+(defface my-face-u-1 '((t (:foreground "SteelBlue" :underline t))) nil)
+(defvar my-face-b-1 'my-face-b-1)
+(defvar my-face-b-2 'my-face-b-2)
+(defvar my-face-u-1 'my-face-u-1)
+(defadvice font-lock-mode (before my-font-lock-mode ())
+  (font-lock-add-keywords
+   major-mode
+   '(("　" 0 my-face-b-1 append)
+     ("\t" 0 my-face-b-2 append)
+     ("[ ]+$" 0 my-face-u-1 append))))
+(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
+(ad-activate 'font-lock-mode)
+(add-hook 'find-file-hooks '(lambda ()
+(if font-lock-mode nil (font-lock-mode t))) t)
 
 ;; git 対応
 (require 'magit)
@@ -92,6 +110,15 @@
 (define-key global-map "\C-\\" nil)                  ; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-c " 'other-frame)         ; フレーム移動
 (define-key global-map "\M-g " 'goto-line)           ; 指定行へジャンプ
+
+;;; (★a) ctrl-q-map という変数を新たに定義しました。
+;;;       新規作成したキーマップを代入しています。
+(defvar ctl-q-map (make-keymap))
+(define-key global-map (kbd "C-q") ctl-q-map)
+(define-key ctl-q-map (kbd "C-a") 'your-favorite-funca)
+(define-key ctl-q-map (kbd "C-b") 'your-favorite-funcb)
+(define-key ctl-q-map (kbd "C-q") 'quoted-insert)
+(define-key ctl-q-map (kbd "C-z") 'your-favorite-funcz)
 
 ;; 拡張子tplを関連付け
 (add-to-list 'auto-mode-alist '("//.tpl$" . html-mode))
@@ -134,6 +161,36 @@
 ;; 一行が 80 字以上になった時には自動改行する
 ;(setq fill-column 80)
 ;(setq-default auto-fill-mode t)
+
+;; タブ関連設定
+(setq-default tab-width 2)
+(setq tab-width 2)
+
+;;タブは2文字ごとに
+(setq-default tab-width 4)
+(setq default-tab-width 4)
+(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
+                      64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
+(defun set-aurora-tab-width (num &optional local redraw)
+  "タブ幅をセットします。タブ5とかタブ20も設定できたりします。
+localが non-nilの場合は、カレントバッファでのみ有効になります。
+redrawが non-nilの場合は、Windowを再描画します。"
+  (interactive "nTab Width: ")
+  (when local
+    (make-local-variable 'tab-width)
+    (make-local-variable 'tab-stop-list))
+  (setq tab-width num)
+  (setq tab-stop-list ())
+  (while (<= num 256)
+    (setq tab-stop-list `(,@tab-stop-list ,num))
+    (setq num (+ num tab-width)))
+  (when redraw (redraw-display)) tab-width)
+
+(set-aurora-tab-width (setq default-tab-width (setq-default tab-width 8)))
+
+(define-key ctl-q-map (kbd "2") (lambda () (interactive) (set-aurora-tab-width 2 t t)))
+(define-key ctl-q-map (kbd "4") (lambda () (interactive) (set-aurora-tab-width 4 t t)))
+(define-key ctl-q-map (kbd "8") (lambda () (interactive) (set-aurora-tab-width 8 t t)))
 
 ;; 現在の関数名をモードラインに表示
 (which-function-mode 1)
