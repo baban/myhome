@@ -1,0 +1,25 @@
+# 参考にしたサイト
+# http://d.hatena.ne.jp/os0x/20120220/1329750795
+
+[alias]
+	co = checkout
+	c = checkout
+	st = status -sb
+	s = status
+	ci = commit
+	di = diff
+	br = branch
+	b = branch
+	log = log --name-status
+  l = log --name-status
+  pr = pull --rebase
+  fo = fetch origin
+  ro = rebase origin
+  rc = rebase --continue
+  # 単語単位のdiff
+  wd = diff --word-diff
+  # ログをtreeで表示(簡易tig) via http://webtech-walker.com/archive/2010/03/04034601.html  
+  lg = log --graph --pretty=oneline --decorate --date=short --abbrev-commit --branches
+[user]
+	email = m_matsubara@okwave.co.jp
+	name = masanao.matsubara
