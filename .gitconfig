@@ -2,6 +2,7 @@
 # http://d.hatena.ne.jp/os0x/20120220/1329750795
 
 [alias]
+  a = add
 	co = checkout
 	c = checkout
 	st = status -sb
