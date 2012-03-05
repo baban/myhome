@@ -7,8 +7,9 @@
 	c = checkout
 	st = status -sb
 	s = status
-	ci = commit
 	di = diff
+	ci = commit
+	cam = commiti --amend
 	br = branch
 	b = branch
 	log = log --name-status
