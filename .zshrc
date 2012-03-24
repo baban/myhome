@@ -71,6 +71,7 @@ function chpwd() { ls }
 
 # bash zsh 共通の拡張設定
 [ -f ~/.xshrc ] && source ~/.xshrc
+[ -f ~/.xshrc.mime ] && source ~/.xshrci.mine
 
 # 環境ごとの独自設定を記述
 case `uname` in 
