@@ -89,6 +89,36 @@
 (add-hook 'find-file-hooks '(lambda ()
 (if font-lock-mode nil (font-lock-mode t))) t)
 
+;; タブ関連設定
+(setq-default tab-width 2)
+(setq tab-width 2)
+
+;;タブは2文字ごとに
+(setq-default tab-width 4)
+(setq default-tab-width 4)
+(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
+                      64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
+(defun set-aurora-tab-width (num &optional local redraw)
+  "タブ幅をセットします。タブ5とかタブ20も設定できたりします。
+localが non-nilの場合は、カレントバッファでのみ有効になります。
+redrawが non-nilの場合は、Windowを再描画します。"
+  (interactive "nTab Width: ")
+  (when local
+    (make-local-variable 'tab-width)
+    (make-local-variable 'tab-stop-list))
+  (setq tab-width num)
+  (setq tab-stop-list ())
+  (while (<= num 256)
+    (setq tab-stop-list `(,@tab-stop-list ,num))
+    (setq num (+ num tab-width)))
+  (when redraw (redraw-display)) tab-width)
+
+(set-aurora-tab-width (setq default-tab-width (setq-default tab-width 8)))
+
+(define-key ctl-q-map (kbd "2") (lambda () (interactive) (set-aurora-tab-width 2 t t)))
+(define-key ctl-q-map (kbd "4") (lambda () (interactive) (set-aurora-tab-width 4 t t)))
+(define-key ctl-q-map (kbd "8") (lambda () (interactive) (set-aurora-tab-width 8 t t)))
+
 ;; git 対応
 (require 'magit)
 
@@ -162,35 +192,6 @@
 ;(setq fill-column 80)
 ;(setq-default auto-fill-mode t)
 
-;; タブ関連設定
-(setq-default tab-width 2)
-(setq tab-width 2)
-
-;;タブは2文字ごとに
-(setq-default tab-width 4)
-(setq default-tab-width 4)
-(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
-                      64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
-(defun set-aurora-tab-width (num &optional local redraw)
-  "タブ幅をセットします。タブ5とかタブ20も設定できたりします。
-localが non-nilの場合は、カレントバッファでのみ有効になります。
-redrawが non-nilの場合は、Windowを再描画します。"
-  (interactive "nTab Width: ")
-  (when local
-    (make-local-variable 'tab-width)
-    (make-local-variable 'tab-stop-list))
-  (setq tab-width num)
-  (setq tab-stop-list ())
-  (while (<= num 256)
-    (setq tab-stop-list `(,@tab-stop-list ,num))
-    (setq num (+ num tab-width)))
-  (when redraw (redraw-display)) tab-width)
-
-(set-aurora-tab-width (setq default-tab-width (setq-default tab-width 8)))
-
-(define-key ctl-q-map (kbd "2") (lambda () (interactive) (set-aurora-tab-width 2 t t)))
-(define-key ctl-q-map (kbd "4") (lambda () (interactive) (set-aurora-tab-width 4 t t)))
-(define-key ctl-q-map (kbd "8") (lambda () (interactive) (set-aurora-tab-width 8 t t)))
 
 ;; 現在の関数名をモードラインに表示
 (which-function-mode 1)
@@ -219,4 +220,7 @@ redrawが non-nilの場合は、Windowを再描画します。"
   "Performs a PHP lint-check on the current file."
   (interactive)
   (shell-command (concat "php -l " (buffer-file-name))))
+
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
