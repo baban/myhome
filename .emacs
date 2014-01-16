@@ -9,13 +9,14 @@
   (append
     (list
       (expand-file-name "~/.site-lisp/")
-      (expand-file-name "~/.emacs.d/elisp"))
+      ;(expand-file-name "~/.emacs.d/elisp")
+      )
       load-path))
 
 ;; まず、install-elisp のコマンドを使える様にします。
-(require 'install-elisp)
+;(require 'install-elisp)
 ;; 次に、Elisp ファイルをインストールする場所を指定します。
-(setq install-elisp-repository-directory "~/.emacs.d/elisp/")
+;(setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 
 ;; 初期フレームの設定
 (setq initial-frame-alist
@@ -26,13 +27,16 @@
        (height . 30))   ; フレーム高(文字数)
         initial-frame-alist))
 
-
 ;; 新規フレームのデフォルト設定
 (setq default-frame-alist
   (append
     '((width  . 120)	; フレーム幅(文字数)
       (height . 30))	; フレーム高(文字数)
        default-frame-alist))
+
+(custom-set-variables
+  '(global-linum-mode t) ; 行番号を表示する
+  '(line-number-mode t))
 
 (when (featurep 'carbon-emacs-package)
   (progn
@@ -61,17 +65,24 @@
 ;; macシステム
 (when (eq system-type 'darwin) ())
 
+;; 
 ; mac フォント設定
 (if (eq window-system 'mac) 
-  (progn 
-    (require 'carbon-font)
-    (fixed-width-set-fontset "Osaka" 10)))
+  ;; Monaco 12pt をデフォルトにする
+  (set-face-attribute 'default nil
+    :family "Monaco"
+    :height 120)
+  ;; 日本語をヒラギノ角ゴProNにする
+  (set-fontset-font "fontset-default"
+    'japanese-jisx0208
+    '("Hiragino Maru Gothic ProN"))
+  ;; 半角カナをヒラギノ角ゴProNにする
+  (set-fontset-font "fontset-default"
+    'katakana-jisx0201
+    '("Hiragino Maru Gothic ProN")))
 
 ;; 非mac で 非GUI な設定
-(when (not (featurep 'carbon-emacs-package))
-  (progn
-    (require 'wb-line-number)
-    (wb-line-number-toggle)))
+(when (not (featurep 'carbon-emacs-package)))
 
 ;; タブ化
 (when (require 'tabbar nil t)
@@ -93,12 +104,8 @@
 (ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
 (ad-activate 'font-lock-mode)
 (add-hook 'find-file-hooks '(lambda ()
-(if font-lock-mode nil (font-lock-mode t))) t)
+  (if font-lock-mode nil (font-lock-mode t))) t)
 
-;; タブ関連設定
-(setq-default tab-width 2)
-(setq tab-width 2)
-(setq tab-stop-list 2)
 
 ;;タブは2文字ごとに
 (setq-default tab-width 4)
@@ -122,12 +129,9 @@ redrawが non-nilの場合は、Windowを再描画します。"
 
 (set-aurora-tab-width (setq default-tab-width (setq-default tab-width 8)))
 
-(define-key ctl-q-map (kbd "2") (lambda () (interactive) (set-aurora-tab-width 2 t t)))
-(define-key ctl-q-map (kbd "4") (lambda () (interactive) (set-aurora-tab-width 4 t t)))
-(define-key ctl-q-map (kbd "8") (lambda () (interactive) (set-aurora-tab-width 8 t t)))
 
 ;; git 対応
-(require 'magit)
+;(require 'magit)
 
 ;; zencoding対応
 (require 'zencoding-mode)
@@ -136,27 +140,6 @@ redrawが non-nilの場合は、Windowを再描画します。"
 (add-hook 'html-mode-hook 'zencoding-mode)
 (define-key global-map "\M-0" 'zencoding-expand-line)
 ;(define-key zencoding-mode-keymap "\M-0" 'zencoding-expand-line)
-
-(define-key global-map "\C-h" 'delete-backward-char) ; 削除
-(define-key global-map "\M-?" 'help-for-help)        ; ヘルプ
-(define-key global-map "\C-ci" 'indent-region)       ; インデント
-(define-key global-map "\C-c\C-i" 'dabbrev-expand)   ; 補完
-(define-key global-map "\C-c;" 'comment-region)      ; コメントアウト
-(define-key global-map "\C-c:" 'uncomment-region)    ; コメント解除
-(define-key global-map "\C-o" 'toggle-input-method)  ; 日本語入力切替
-(define-key global-map "\C-\\" nil)                  ; \C-\の日本語入力の設定を無効にする
-(define-key global-map "\C-c " 'other-frame)         ; フレーム移動
-(define-key global-map "\M-g " 'goto-line)           ; 指定行へジャンプ
-(define-key global-map "\C-M-u" 'untabify)           ; タブをスペースに変換
-
-;;; (★a) ctrl-q-map という変数を新たに定義しました。
-;;;       新規作成したキーマップを代入しています。
-(defvar ctl-q-map (make-keymap))
-(define-key global-map (kbd "C-q") ctl-q-map)
-(define-key ctl-q-map (kbd "C-a") 'your-favorite-funca)
-(define-key ctl-q-map (kbd "C-b") 'your-favorite-funcb)
-(define-key ctl-q-map (kbd "C-q") 'quoted-insert)
-(define-key ctl-q-map (kbd "C-z") 'your-favorite-funcz)
 
 ;; 拡張子tplを関連付け
 (add-to-list 'auto-mode-alist '("\\.tpl$" . html-mode))
@@ -201,7 +184,7 @@ redrawが non-nilの場合は、Windowを再描画します。"
 ;(setq-default auto-fill-mode t)
 
 ;; SCSS関連付け
-(add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
+;(add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
 
 ;; 現在の関数名をモードラインに表示
 (which-function-mode 1)
@@ -235,3 +218,15 @@ redrawが non-nilの場合は、Windowを再描画します。"
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(global-linum-mode t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
