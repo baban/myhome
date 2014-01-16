@@ -20,6 +20,10 @@
        (height . 30))   ; フレーム高(文字数)
         initial-frame-alist))
 
+
+(when (require 'tabbar nil t)
+    (tabbar-mode))
+
 ;; 新規フレームのデフォルト設定
 (setq default-frame-alist
   (append
@@ -49,12 +53,7 @@
     (set-frame-parameter nil 'alpha '(100 80))
     ;; タブ化
     (require 'elscreen)
-    (define-key elscreen-map "\C-z" 'iconify-or-deiconify-frame)
-    ;; linumを有効化
-    (require 'linum)
-    (global-linum-mode t)
-    (setq linum-format "%5d ")
-    (global-set-key [f5] 'linum-mode)))
+    (define-key elscreen-map "\C-z" 'iconify-or-deiconify-frame)))
 
 ;; macシステム
 (when (eq system-type 'darwin) ())
@@ -92,6 +91,7 @@
 ;; タブ関連設定
 (setq-default tab-width 2)
 (setq tab-width 2)
+(setq tab-stop-list 2)
 
 ;;タブは2文字ごとに
 (setq-default tab-width 4)
@@ -140,6 +140,7 @@ redrawが non-nilの場合は、Windowを再描画します。"
 (define-key global-map "\C-\\" nil)                  ; \C-\の日本語入力の設定を無効にする
 (define-key global-map "\C-c " 'other-frame)         ; フレーム移動
 (define-key global-map "\M-g " 'goto-line)           ; 指定行へジャンプ
+(define-key global-map "\C-M-u" 'untabify)           ; タブをスペースに変換
 
 ;;; (★a) ctrl-q-map という変数を新たに定義しました。
 ;;;       新規作成したキーマップを代入しています。
@@ -151,7 +152,7 @@ redrawが non-nilの場合は、Windowを再描画します。"
 (define-key ctl-q-map (kbd "C-z") 'your-favorite-funcz)
 
 ;; 拡張子tplを関連付け
-(add-to-list 'auto-mode-alist '("//.tpl$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl$" . html-mode))
 (show-paren-mode 1)
 
 ;; バックアップファイルは作らない
@@ -192,6 +193,8 @@ redrawが non-nilの場合は、Windowを再描画します。"
 ;(setq fill-column 80)
 ;(setq-default auto-fill-mode t)
 
+;; SCSS関連付け
+(add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
 
 ;; 現在の関数名をモードラインに表示
 (which-function-mode 1)
@@ -223,4 +226,5 @@ redrawが non-nilの場合は、Windowを再描画します。"
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
 
