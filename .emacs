@@ -8,8 +8,14 @@
 (setq load-path
   (append
     (list
-      (expand-file-name "~/.site-lisp/"))
+      (expand-file-name "~/.site-lisp/")
+      (expand-file-name "~/.emacs.d/elisp"))
       load-path))
+
+;; まず、install-elisp のコマンドを使える様にします。
+(require 'install-elisp)
+;; 次に、Elisp ファイルをインストールする場所を指定します。
+(setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 
 ;; 初期フレームの設定
 (setq initial-frame-alist
@@ -20,9 +26,6 @@
        (height . 30))   ; フレーム高(文字数)
         initial-frame-alist))
 
-
-(when (require 'tabbar nil t)
-    (tabbar-mode))
 
 ;; 新規フレームのデフォルト設定
 (setq default-frame-alist
@@ -69,6 +72,10 @@
   (progn
     (require 'wb-line-number)
     (wb-line-number-toggle)))
+
+;; タブ化
+(when (require 'tabbar nil t)
+    (tabbar-mode))
 
 ;; タブや空白の表示設定
 (defface my-face-b-1 '((t (:foreground "Red" :underline t))) nil)
