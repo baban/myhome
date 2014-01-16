@@ -198,6 +198,9 @@ redrawが non-nilの場合は、Windowを再描画します。"
 ;; 現在の関数名をモードラインに表示
 (which-function-mode 1)
 
+;; インデントをスペースで行う方法に統一する
+(setq-default indent-tabs-mode nil) 
+
 ;; 最近使ったファイルを保存(M-x recentf-open-filesで開く)
 (recentf-mode)
 
