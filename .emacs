@@ -9,9 +9,13 @@
   (append
     (list
       (expand-file-name "~/.site-lisp/")
-      ;(expand-file-name "~/.emacs.d/elisp")
+      (expand-file-name "~/.emacs.d/elisp")
       )
       load-path))
+
+(require 'server)
+(unless (server-running-p)
+    (server-start))
 
 ;; まず、install-elisp のコマンドを使える様にします。
 ;(require 'install-elisp)
@@ -35,8 +39,13 @@
        default-frame-alist))
 
 (custom-set-variables
-  '(global-linum-mode t) ; 行番号を表示する
-  '(line-number-mode t))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(global-linum-mode t)
+ '(show-paren-mode t))
 
 (when (featurep 'carbon-emacs-package)
   (progn
@@ -217,16 +226,9 @@ redrawが non-nilの場合は、Windowを再描画します。"
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
+(require 'cl)
+(defun close-all-buffers ()
+  (interactive)
+  (loop for buffer being the buffers
+                 do (kill-buffer buffer)))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(global-linum-mode t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
