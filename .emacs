@@ -239,3 +239,6 @@ redrawが non-nilの場合は、Windowを再描画します。"
 (define-key global-map [(home)] 'beginning-of-line)
 (define-key global-map [(end)] 'end-of-line)
 
+(add-hook 'css-mode-hook 'ac-css-mode-setup)
+
+(delete-selection-mode t)
