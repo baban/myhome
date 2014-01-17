@@ -235,3 +235,7 @@ redrawが non-nilの場合は、Windowを再描画します。"
   (loop for buffer being the buffers
                  do (kill-buffer buffer)))
 
+(define-key ctl-x-map "l" 'goto-line)
+(define-key global-map [(home)] 'beginning-of-line)
+(define-key global-map [(end)] 'end-of-line)
+
