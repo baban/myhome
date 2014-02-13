@@ -138,7 +138,6 @@ redrawが non-nilの場合は、Windowを再描画します。"
 
 (set-aurora-tab-width (setq default-tab-width (setq-default tab-width 8)))
 
-
 ;; git 対応
 ;(require 'magit)
 
@@ -192,9 +191,6 @@ redrawが non-nilの場合は、Windowを再描画します。"
 ;(setq fill-column 80)
 ;(setq-default auto-fill-mode t)
 
-;; SCSS関連付け
-;(add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
-
 ;; 現在の関数名をモードラインに表示
 (which-function-mode 1)
 
@@ -229,6 +225,9 @@ redrawが non-nilの場合は、Windowを再描画します。"
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
+(add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))
+(autoload 'typescript-mode "TypeScript" "Major mode for editing typescript." t)
+
 (require 'cl)
 (defun close-all-buffers ()
   (interactive)
@@ -240,5 +239,9 @@ redrawが non-nilの場合は、Windowを再描画します。"
 (define-key global-map [(end)] 'end-of-line)
 
 (add-hook 'css-mode-hook 'ac-css-mode-setup)
+(add-hook 'css-mode-hook '("\\.scss$" . css-mode))
+
+;; SCSS関連付け
+;(add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
 
 (delete-selection-mode t)
