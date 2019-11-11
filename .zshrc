@@ -71,7 +71,7 @@ function chpwd() { ls }
 
 # bash zsh 共通の拡張設定
 [ -f ~/.xshrc ] && source ~/.xshrc
-[ -f ~/.xshrc.mime ] && source ~/.xshrci.mine
+[ -f ~/.xshrc.mime ] && source ~/.xshrc.mine
 
 # 環境ごとの独自設定を記述
 case `uname` in 
@@ -82,3 +82,13 @@ esac
 # ホストサーバーごとの依存の設定を追記
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+alias be="bundle exec"
+alias bec="bundle exec rails c"
+alias ber="bundle exec rspec"
+
+alias g="git"
+alias c="code"
