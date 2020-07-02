@@ -11,7 +11,8 @@
 	ci = commit
 	cam = commit --amend
 	br = branch
-	b = branch
+  b = branch
+  f = fetch
 	log = log --name-status
   l = log --name-status
   pr = pull --rebase
@@ -22,6 +23,7 @@
   wd = diff --word-diff
   # ログをtreeで表示(簡易tig) via http://webtech-walker.com/archive/2010/03/04034601.html  
   lg = log --graph --pretty=oneline --decorate --date=short --abbrev-commit --branches
+  sw = switch
 [user]
-	email = m_matsubara@okwave.co.jp
-	name = masanao.matsubara
+	email = babanba.n@gmail.com
+	name = babanba-n
