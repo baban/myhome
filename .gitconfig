@@ -13,7 +13,6 @@
 	br = branch
   b = branch
   f = fetch
-	log = log --name-status
   l = log --name-status
   pr = pull --rebase
   fo = fetch origin
