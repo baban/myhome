@@ -88,7 +88,11 @@ esac
 
 alias be="bundle exec"
 alias bec="bundle exec rails c"
-alias ber="bundle exec rspec"
+alias ber="bundle exec rails"
+alias bers="bundle exec rspec"
 
 alias g="git"
 alias c="code"
+
+alias d="docker"
+alias dc="docker compose"
