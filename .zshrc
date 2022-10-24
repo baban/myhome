@@ -85,6 +85,7 @@ esac
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+alias G="grep"
 
 alias be="bundle exec"
 alias bec="bundle exec rails c"
