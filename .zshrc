@@ -82,9 +82,6 @@ esac
 # ホストサーバーごとの依存の設定を追記
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 alias G="grep"
 
 alias be="bundle exec"
